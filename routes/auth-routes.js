@@ -85,26 +85,51 @@ authRoutes.post('/logout', (req, res, next) => {
     res.status(200).json({ message: 'Success' });
 });
   
-authRoutes.get('/loggedin', (req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.status(200).json(req.user);
-      return;
-    }
+// authRoutes.get('/loggedin', (req, res, next) => {
+//     if (req.isAuthenticated()) {
+//       res.status(200).json(req.user);
+//       return;
+//     }
   
+//     res.status(403).json({ message: 'Unauthorized' });
+// });
+
+
+//Check LOGGEDIN
+authRoutes.get('/loggedin', (req, res, next) => {
+    console.log('back: ', req.user)
+    if (req.isAuthenticated()) {
+        res.status(200).json(req.user);
+        return;
+    }
     res.status(403).json({ message: 'Unauthorized' });
-});
+}); // loggedin closed
+
+
+
+
+
 
 
 authRoutes.post('/users/edit/:id', (req,res,next)=>{
-
+    const password = req.body.password
+    const salt     = bcrypt.genSaltSync(10);
+    const hashPass = bcrypt.hashSync(password, salt);
     User.findByIdAndUpdate(req.params.id, {
         username: req.body.username,
-        password: req.body.password
+        password: hashPass
     })
     .then((oneUser)=>{
         res.json(oneUser)
             .catch(err => console.log("message: 'Something went wrong setting new password",err))
     })  
+
+    // User.save((err) => {
+    //     if (err) {
+    //       res.status(400).json({ message: 'Something went wrong' });
+    //       return;
+    //     }
+    // })
 })
    
 
