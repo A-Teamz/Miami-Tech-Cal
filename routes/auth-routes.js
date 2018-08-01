@@ -2,6 +2,8 @@ const express    = require('express');
 const passport   = require('passport');
 const bcrypt     = require('bcryptjs');
 const authRoutes = express.Router();
+// const uploadCloud = require("../config/cloudinary");
+
 
 // User model
 const User       = require('../models/user');
@@ -91,6 +93,22 @@ authRoutes.get('/loggedin', (req, res, next) => {
   
     res.status(403).json({ message: 'Unauthorized' });
 });
-  
+
+
+authRoutes.post('/users/edit/:id', (req,res,next)=>{
+
+    User.findByIdAndUpdate(req.params.id, {
+        username: req.body.username,
+        password: req.body.password
+    })
+    .then((oneUser)=>{
+        res.json(oneUser)
+            .catch(err => console.log("message: 'Something went wrong setting new password",err))
+    })  
+})
+   
+
+
+
 
 module.exports = authRoutes;
