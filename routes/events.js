@@ -11,38 +11,38 @@ const axios = require('axios');
 
 
 //gets all events
-router.get('/events', (req, res, next) => {
-// console.log('hiiiiiiiiiiiiiii :');
+// router.get('/events', (req, res, next) => {
+// // console.log('hiiiiiiiiiiiiiii :');
 
-    // Event.find()
-    // .then((allTheEvents) => {
-    // https://api.meetup.com/find/upcoming_events?key=726f391116101c5b316166a3d4411e&zip=33130&category=34&radius=10&sign=true
+//     // Event.find()
+//     // .then((allTheEvents) => {
+//     // https://api.meetup.com/find/upcoming_events?key=726f391116101c5b316166a3d4411e&zip=33130&category=34&radius=10&sign=true
     
-    let userZipCode = '33130'; // Miami zip hard coded
+//     let userZipCode = '33130'; // Miami zip hard coded
 
-    let userRadius = '10'; // 10 miles hard coded
+//     let userRadius = '10'; // 10 miles hard coded
 
-    let meetupKey = '726f391116101c5b316166a3d4411e'; // meetup API key
+//     let meetupKey = '726f391116101c5b316166a3d4411e'; // meetup API key
         
-    axios.get(`https://api.meetup.com/find/upcoming_events?key=${meetupKey}&zip=${userRadius}&category=34&radius=${userRadius}&sign=true`)
+//     axios.get(`https://api.meetup.com/find/upcoming_events?key=${meetupKey}&zip=${userRadius}&category=34&radius=${userRadius}&sign=true`)
             
-        .then((meetupEvents) => {
-            // console.log(meetupEvents.data.events.map(event => event.name));
-            const filteredArray =  meetupEvents.data.events.map((event) => {
-                return {
-                    name: event.name,
-                    apiID: event.id,
+//         .then((meetupEvents) => {
+//             // console.log(meetupEvents.data.events.map(event => event.name));
+//             const filteredArray =  meetupEvents.data.events.map((event) => {
+//                 return {
+//                     name: event.name,
+//                     apiID: event.id,
                     
-                };
+//                 };
                 
 
 
-            });
+//             });
             
-            Event.create(filteredArray)
-                .then(() => {
+//             Event.create(filteredArray)
+//                 .then(() => {
               
-                    axios google cal api
+//                     axios google cal api
 
 
 
@@ -53,14 +53,14 @@ router.get('/events', (req, res, next) => {
 
 
 
-            })
+//             })
             
            
 
                 
-        })
-        .catch(err => console.log('Error finding all the events', err));
-});
+//         })
+//         .catch(err => console.log('Error finding all the events', err));
+// });
 
 //gets ONE event
 router.get('/events/details/:id', (req, res, next) => {

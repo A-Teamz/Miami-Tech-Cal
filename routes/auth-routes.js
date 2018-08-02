@@ -16,12 +16,6 @@ authRoutes.post('/signup', (req, res, next) => {
       res.status(400).json({ message: 'Provide username and password' });
       return;
     }
-  
-
-    // if (password.length < 7) {
-    //     res.status(400).json({ message: 'Provide password that is longer than 7 characters' });
-    //     return;
-    // }
 
     User.findOne({ username }, '_id', (err, foundUser) => {
         if (foundUser) {
@@ -95,7 +89,7 @@ authRoutes.post('/logout', (req, res, next) => {
 // });
 
 
-//Check LOGGEDIN
+// Checks if logged in
 authRoutes.get('/loggedin', (req, res, next) => {
     console.log('back: ', req.user);
     if (req.isAuthenticated()) {
@@ -126,7 +120,16 @@ authRoutes.post('/users/edit/:id', (req, res, next) => {
     // })
 });
    
-
+// for Google login 
+authRoutes.get("/auth/google", passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/plus.login",
+            "https://www.googleapis.com/auth/plus.profile.emails.read"]
+  }));
+  
+  authRoutes.get("/auth/google/callback", passport.authenticate("google", {
+    failureRedirect: "/",
+    successRedirect: "/" // <----- Change this eventually
+  }));
 
 
 
