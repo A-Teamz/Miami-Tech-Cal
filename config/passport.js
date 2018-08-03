@@ -45,8 +45,8 @@ passport.use(new LocalStrategy((username, password, next) => {
 
 // for Google login
 passport.use(new GoogleStrategy({
-  clientID: process.env.googleClientID,
-  clientSecret: process.env.googleClientSecret,
+  clientID: process.env.googleClientID,  // <----- in ENV 
+  clientSecret: process.env.googleClientSecret, // <----- in ENV 
   callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
   User.findOne({ googleID: profile.id }, (err, user) => {

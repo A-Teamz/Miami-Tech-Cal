@@ -88,7 +88,7 @@ authRoutes.post('/logout', (req, res, next) => {
 //     res.status(403).json({ message: 'Unauthorized' });
 // });
 
-
+ 
 // Checks if logged in
 authRoutes.get('/loggedin', (req, res, next) => {
     console.log('back: ', req.user);

@@ -7,9 +7,6 @@ const axios = require('axios');
 //     baseURL: 'https://api.meetup.com/find/upcoming_events?',
 //   });
 
-
-
-
 //gets all events
 // router.get('/events', (req, res, next) => {
 // // console.log('hiiiiiiiiiiiiiii :');
@@ -32,10 +29,7 @@ const axios = require('axios');
 //                 return {
 //                     name: event.name,
 //                     apiID: event.id,
-                    
-//                 };
-                
-
+//                 };                
 
 //             });
             
@@ -43,24 +37,12 @@ const axios = require('axios');
 //                 .then(() => {
               
 //                     axios google cal api
-
-
-
-
-
-
-
-
-
-
 //             })
-            
-           
-
-                
 //         })
 //         .catch(err => console.log('Error finding all the events', err));
 // });
+
+
 
 //gets ONE event
 router.get('/events/details/:id', (req, res, next) => {
