@@ -15,6 +15,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 require('./config/passport');
+// require('./config/cloudinary');
 
 
 mongoose.Promise = Promise;
