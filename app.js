@@ -17,6 +17,7 @@ const passport = require('passport');
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 require('./config/passport');
+// require('./config/cloudinary');
 
 
 mongoose.Promise = Promise;
