@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
     name: String,
+    apiID: String,
     location: String, // might need to be lon/lat instead
     time: String,
     date: Date,

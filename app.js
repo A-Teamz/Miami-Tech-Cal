@@ -14,6 +14,8 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+
 require('./config/passport');
 
 

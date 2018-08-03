@@ -16,12 +16,6 @@ authRoutes.post('/signup', (req, res, next) => {
       res.status(400).json({ message: 'Provide username and password' });
       return;
     }
-  
-
-    // if (password.length < 7) {
-    //     res.status(400).json({ message: 'Provide password that is longer than 7 characters' });
-    //     return;
-    // }
 
     User.findOne({ username }, '_id', (err, foundUser) => {
         if (foundUser) {
@@ -94,10 +88,10 @@ authRoutes.post('/logout', (req, res, next) => {
 //     res.status(403).json({ message: 'Unauthorized' });
 // });
 
-
-//Check LOGGEDIN
+ 
+// Checks if logged in
 authRoutes.get('/loggedin', (req, res, next) => {
-    console.log('back: ', req.user)
+    console.log('back: ', req.user);
     if (req.isAuthenticated()) {
         res.status(200).json(req.user);
         return;
@@ -105,24 +99,18 @@ authRoutes.get('/loggedin', (req, res, next) => {
     res.status(403).json({ message: 'Unauthorized' });
 }); // loggedin closed
 
-
-
-
-
-
-
-authRoutes.post('/users/edit/:id', (req,res,next)=>{
-    const password = req.body.password
-    const salt     = bcrypt.genSaltSync(10);
+authRoutes.post('/users/edit/:id', (req, res, next) => {
+    const password = req.body.password;
+    const salt = bcrypt.genSaltSync(10);
     const hashPass = bcrypt.hashSync(password, salt);
     User.findByIdAndUpdate(req.params.id, {
         username: req.body.username,
         password: hashPass
     })
-    .then((oneUser)=>{
-        res.json(oneUser)
-            .catch(err => console.log("message: 'Something went wrong setting new password",err))
-    })  
+        .then((oneUser) => {
+            res.json(oneUser)
+                .catch(err => console.log("message: 'Something went wrong setting new password", err));
+        });
 
     // User.save((err) => {
     //     if (err) {
@@ -130,9 +118,18 @@ authRoutes.post('/users/edit/:id', (req,res,next)=>{
     //       return;
     //     }
     // })
-})
+});
    
-
+// for Google login 
+authRoutes.get("/auth/google", passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/plus.login",
+            "https://www.googleapis.com/auth/plus.profile.emails.read"]
+  }));
+  
+  authRoutes.get("/auth/google/callback", passport.authenticate("google", {
+    failureRedirect: "/",
+    successRedirect: "/" // <----- Change this eventually
+  }));
 
 
 
