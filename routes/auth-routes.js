@@ -128,7 +128,7 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
   
   authRoutes.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: "/",
-    successRedirect: "/" // <----- Change this eventually
+    successRedirect: "/" // <----- Change this eventually to angular
   }));
 
 
