@@ -7,6 +7,15 @@ const axios = require('axios');
 //     baseURL: 'https://api.meetup.com/find/upcoming_events?',
 // });
   
+//================ Eventbright API stuff ============================
+// axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
+  
+// let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH';
+
+// let eventbriteCategories = '102';
+
+// let eventbriteLocation = 'miami';
+
 
 
 // gets all events
