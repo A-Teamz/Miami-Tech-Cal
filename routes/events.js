@@ -3,11 +3,22 @@ const router = express.Router();
 const Event = require('../models/event');
 const axios = require('axios');
 
-const meetupAPI = axios.create({
-    baseURL: 'https://api.meetup.com/find/upcoming_events?',
-});
-  
+// const meetupAPI = axios.create({
+//     baseURL: 'https://api.meetup.com/find/upcoming_events?',
+// });
 
+// const eventbriteAPI = axios.creat({
+//     baseURL: 'https://www.eventbriteapi.com/v3/users/me/?token=MYTOKEN'
+// });
+
+
+// axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
+  
+// let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH'
+
+// let eventbriteCategories = '102'
+
+// let eventbriteLocation = 'miami'
 
 // gets all events
 router.get('/events', (req, res, next) => {
