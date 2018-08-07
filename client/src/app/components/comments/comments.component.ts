@@ -36,6 +36,8 @@ export class CommentsComponent implements OnInit {
     })
   }
 
+
+  // this is comment
   deletePost(oneEntry) {
     oneEntry = this.theEntryToBeDeleted
     this.theService.deleteEntry(this.theEntryToBeDeleted._id)
