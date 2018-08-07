@@ -37,20 +37,20 @@ commentsRoutes.post('/comments/:id/delete', (req, res, next)=>{
 
 
 
-commentsRoutes.post('/comments/:id/update', (req, res, next)=>{
+// commentsRoutes.post('/comments/:id/update', (req, res, next)=>{
 
-  Entry.findByIdAndUpdate(req.params.id, {
-      title: req.body.title, 
-      content: req.body.content,
+//   Entry.findByIdAndUpdate(req.params.id, {
+//       title: req.body.title, 
+//       content: req.body.content,
       
-  })
-  .then((oneEntry)=>{
-      res.json(entries)
-  })
-  .catch((err)=>{
-      res.json(err);
-  })  
-})
+//   })
+//   .then((oneEntry)=>{
+//       res.json(entries)
+//   })
+//   .catch((err)=>{
+//       res.json(err);
+//   })  
+// })
 
 
 
