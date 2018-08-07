@@ -5,31 +5,31 @@ const axios = require('axios');
 
 // const meetupAPI = axios.create({
 //     baseURL: 'https://api.meetup.com/find/upcoming_events?',
-// });
-<<<<<<< HEAD
+// // });
+// <<<<<<< HEAD
 
-// const eventbriteAPI = axios.creat({
-//     baseURL: 'https://www.eventbriteapi.com/v3/users/me/?token=MYTOKEN'
-// });
+// // const eventbriteAPI = axios.creat({
+// //     baseURL: 'https://www.eventbriteapi.com/v3/users/me/?token=MYTOKEN'
+// // });
 
 
-// axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
+// // axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
   
-// let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH'
+// // let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH'
 
-// let eventbriteCategories = '102'
-=======
+// // let eventbriteCategories = '102'
+// =======
   
-//================ Eventbright API stuff ============================
-// axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
+// //================ Eventbright API stuff ============================
+// // axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
   
-// let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH';
+// // let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH';
 
-// let eventbriteCategories = '102';
+// // let eventbriteCategories = '102';
 
-// let eventbriteLocation = 'miami';
+// // let eventbriteLocation = 'miami';
 
->>>>>>> 9c60acd4caf5003402894dcafe64cb92ee379a69
+// >>>>>>> 9c60acd4caf5003402894dcafe64cb92ee379a69
 
 // let eventbriteLocation = 'miami'
 
