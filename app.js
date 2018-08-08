@@ -89,4 +89,11 @@ const authRoutes = require('./routes/auth-routes');
 app.use('/api', authRoutes);
 
 
+
+
+
+app.use((requestAnimationFrame, res, next) => {
+  res.sendfile(__dirname + '/public/index.html');
+});
+
 module.exports = app;

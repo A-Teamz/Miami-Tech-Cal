@@ -62,14 +62,17 @@ router.get('/events', (req, res, next) => {
     axios.get(`https://api.meetup.com/find/upcoming_events?key=${meetupKey}&zip=${userZipCode}&category=34&radius=${userRadius}&sign=true`)
     
         .then((meetupEvents) => {
+            // console.log('meetupEvents :', meetupEvents);
+            
+            // get list of events -> save array 
+            let meetupRawDataArray = [];
+            meetupRawDataArray.push(meetupEvents.data.events);
+            // console.log('meetupRawDataArray ------------------:', meetupRawDataArray);
 
             let meetupArray = [];
+        
+            
             // console.log(meetupEvents.data.events.map(event => event.name));
-
-// get list of events -> save array 
-
-
-
             const filteredArray = meetupEvents.data.events.map((event) => {
 
                 let startDateString = event.local_date + 'T' + event.local_time;
@@ -91,20 +94,20 @@ router.get('/events', (req, res, next) => {
                 };
 
                 meetupArray.push(aMeetupObj);
-                console.log('aMeetupObj :', aMeetupObj);
-                // console.log('meetupArray: ', meetupArray);
+                // console.log('aMeetupObj :', aMeetupObj);
                 
                 // check events by name and start if mach not found do ->
+                if()
 
                 
-                cal.Events.insert('techcalendermia@gmail.com', aMeetupObj)
-                .then(resp => {
-                    console.log('inserted event:');
-                    console.log(resp);
-                })
-                .catch(err => {
-                    console.log('Error: insertEvent-' + err.message);
-                });
+                // cal.Events.insert('techcalendermia@gmail.com', aMeetupObj)
+                // .then(resp => {
+                //     // console.log('inserted event:');
+                //     // console.log(resp);
+                // })
+                // .catch(err => {
+                //     console.log('Error: insertEvent-' + err.message);
+                // });
                
 
             });
