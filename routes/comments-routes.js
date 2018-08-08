@@ -24,7 +24,8 @@ commentsRoutes.post('/comments', (req, res, next) => {
 });
 
 
-commentsRoutes.post('/comments/:id/delete', (req, res, next)=>{
+commentsRoutes.post('/comments/:id/delete', (req, res, next) => {
+  // console.log('req.params.id: ', req.params.id)
   Entry.findByIdAndRemove(req.params.id)
   .then((oneEntry)=>{
       res.json(entries);
@@ -35,23 +36,30 @@ commentsRoutes.post('/comments/:id/delete', (req, res, next)=>{
 })
 
 
+// edit comments
+
+commentsRoutes.put('/comments/:id', (req, res, next) => {
+  // console.log('req.params.id:', req.params.id)
+  // console.log('body: ', req.body)
+  // if (!req.user) {
+  //   res.status(401).json({ message: "Log in to update the phone." });
+  //   return;
+  // }
+  
+
+  const updates = {
+      title: req.body.title,
+      content: req.body.content,
+  };
+
+  console.log("======", updates)
 
 
-// commentsRoutes.post('/comments/:id/update', (req, res, next)=>{
-
-//   Entry.findByIdAndUpdate(req.params.id, {
-//       title: req.body.title, 
-//       content: req.body.content,
-      
-//   })
-//   .then((oneEntry)=>{
-//       res.json(entries)
-//   })
-//   .catch((err)=>{
-//       res.json(err);
-//   })  
-// })
-
+  Entry.findByIdAndUpdate(req.params.id, updates)
+    .then( savedEntry => res.json(savedEntry) )
+    .catch( err => res.json(err) )
+  
+});
 
 
 

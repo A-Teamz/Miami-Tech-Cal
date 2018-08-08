@@ -29,18 +29,23 @@ export class CommentsService {
     .map((res)=>res.json());
   }
 
-  // getOneEntry(theIdOfTheEntry){
-  //   return this.myHttp.get('http://localhost:3000/api/comments/' +theIdOfTheEntry)
-  //   .map((responseThingy)=> responseThingy.json())
+  getOneEntry(theIdOfTheEntry){
+    return this.myHttp.get('http://localhost:3000/api/comments/' +theIdOfTheEntry)
+    .map((responseThingy)=> responseThingy.json())
 
-  // }
+  }
 
   deleteEntry(theIdOfTheEntry){
-    return this.myHttp.post(`http://localhost:3000/api/comments/` , { withCredentials: true })
+    return this.myHttp.post(`http://localhost:3000/api/comments/${theIdOfTheEntry}/delete`, {}, { withCredentials: true })
     .map((res)=> res.json())
   }
 
-  
+  updateComment(theIdOfTheEntry, updates) {
+    console.log('what: ', updates)
+    return this.myHttp.put(`http://localhost:3000/api/comments/${theIdOfTheEntry}`, updates)
+    .map(res => res.json());
+  }
+
 
 
 }

@@ -60,6 +60,7 @@ passport.use(new GoogleStrategy({
     const newUser = new User({
       googleID: profile.id
     });
+    console.log('who is: ', newUser)
 
     newUser.save((err) => {
       if (err) {
