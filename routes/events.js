@@ -3,10 +3,15 @@ const router = express.Router();
 const Event = require('../models/event');
 const axios = require('axios');
 
+// for node-google-calendar
+const CONFIG = require('../config/settings');
+const CalendarAPI = require('node-google-calendar');
+let cal = new CalendarAPI(CONFIG);  
+
 // const meetupAPI = axios.create({
 //     baseURL: 'https://api.meetup.com/find/upcoming_events?',
 // });
-  
+
 //================ Eventbright API stuff ============================
 // axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
   
@@ -16,6 +21,31 @@ const axios = require('axios');
 
 // let eventbriteLocation = 'miami';
 
+
+router.get('/tester', (req, res, next) => {
+
+// to get events
+    //     let params = {
+//         // timeMin: '2018-08-08T06:00:00+08:00',
+//         // timeMax: '2018-08-08T22:00:00+08:00',
+//         // q: 'query term',
+//         singleEvents: true,
+//         orderBy: 'startTime'
+//     }; 	//Optional query parameters referencing google APIs
+    
+//     cal.Events.list('techcalendermia@gmail.com', params)
+//   .then(json => {
+// 	//Success
+// 	console.log('List of events on calendar within time-range:');
+// 	res.send(json);
+//   }).catch(err => {
+// 	//Error
+// 	console.log('Error: listSingleEvents -' + err.message);
+//   });
+    
+
+    
+});
 
 
 // gets all events
@@ -29,13 +59,17 @@ router.get('/events', (req, res, next) => {
     
     let meetupKey = '726f391116101c5b316166a3d4411e'; // meetup API key
     
-
     axios.get(`https://api.meetup.com/find/upcoming_events?key=${meetupKey}&zip=${userZipCode}&category=34&radius=${userRadius}&sign=true`)
     
         .then((meetupEvents) => {
 
             let meetupArray = [];
             // console.log(meetupEvents.data.events.map(event => event.name));
+
+// get list of events -> save array 
+
+
+
             const filteredArray = meetupEvents.data.events.map((event) => {
 
                 let startDateString = event.local_date + 'T' + event.local_time;
@@ -44,7 +78,7 @@ router.get('/events', (req, res, next) => {
                
                 let aMeetupObj = {
                     summary: event.name,
-                    apiID: event.id,
+                    // apiID: event.id,
                     start: {
                         dateTime: new Date(startDateString),
                     },
@@ -57,26 +91,32 @@ router.get('/events', (req, res, next) => {
                 };
 
                 meetupArray.push(aMeetupObj);
+                console.log('aMeetupObj :', aMeetupObj);
                 // console.log('meetupArray: ', meetupArray);
-                 
+                
+                // check events by name and start if mach not found do ->
+
+                
+                cal.Events.insert('techcalendermia@gmail.com', aMeetupObj)
+                .then(resp => {
+                    console.log('inserted event:');
+                    console.log(resp);
+                })
+                .catch(err => {
+                    console.log('Error: insertEvent-' + err.message);
+                });
+               
+
             });
-            return res.json(meetupArray);
+                          
+                
         })
+        // return res.json(meetupArray);
         .catch(err => console.log('Error finding Meetup events and creating JSON objects: ', err));
-        
-        // where to do this???
-        // axios.post(` https://www.googleapis.com/calendar/v3/calendars/techcalendermia%40gmail.com/events?conferenceDataVersion=0&sendNotifications=true&supportsAttachments=true&key=${meetupKey}`)
-        //     .then(() => {
-        
-            
-        //     })
-        //     .catch();
 });
+        
 
-
-
-
-//gets ONE event
+//gets ONE event - PROBABLY NOT NEEDED
 router.get('/events/details/:id', (req, res, next) => {
     const id = req.params.id;
     Event.findById(id)
@@ -85,9 +125,6 @@ router.get('/events/details/:id', (req, res, next) => {
                 .catch(err => console.log('Error while finding event by ID: ', err));
         });
 });
-
-
-
 
 
 module.exports = router;
