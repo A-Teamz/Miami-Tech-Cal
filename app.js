@@ -16,6 +16,8 @@ const passport = require('passport');
 
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
+
+
 require('./config/passport');
 // require('./config/cloudinary');
 
@@ -112,4 +114,9 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
+app.use((requestAnimationFrame, res, next) => {
+  res.sendfile(__dirname + '/public/index.html');
+});
+
 module.exports = app;
+
