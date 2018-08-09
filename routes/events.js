@@ -64,24 +64,21 @@ router.get('/events', (req, res, next) => {
         .then((meetupEvents) => {
             // console.log('meetupEvents :', meetupEvents);
             
-            // get list of events -> save array 
+            // GET LIST OF EVENTS FROM MEETUP API -> SAVE TO ARRAY 
             let meetupRawDataArray = [];
             meetupRawDataArray.push(meetupEvents.data.events);
             // console.log('meetupRawDataArray ------------------:', meetupRawDataArray);
 
-            let meetupArray = [];
         
-            
-            // console.log(meetupEvents.data.events.map(event => event.name));
-            const filteredArray = meetupEvents.data.events.map((event) => {
+            // PREPS RAW MEETUP DATA TO SEND TO GOOGLE CAL API
+            let meetupArray = meetupEvents.data.events.map((event) => {
 
-                let startDateString = event.local_date + 'T' + event.local_time;
-                let addedTime = Number(new Date(startDateString)) + Number(event.duration);
-                let locationData = ((event || {}).venue || {});
+                let startDateString = event.local_date + 'T' + event.local_time; // makes aprox dateTime structure
+                let addedTime = Number(new Date(startDateString)) + Number(event.duration); // makes end time by adding millisecond dates
+                let locationData = ((event || {}).venue || {}); // how to accsess nested objects
                
                 let aMeetupObj = {
                     summary: event.name,
-                    // apiID: event.id,
                     start: {
                         dateTime: new Date(startDateString),
                     },
@@ -93,24 +90,120 @@ router.get('/events', (req, res, next) => {
                     description: event.description + '    ' + event.link,
                 };
 
-                meetupArray.push(aMeetupObj);
+                console.log('aMeetupObj.start.dateTime :', aMeetupObj.start.dateTime);
+                return aMeetupObj;
+                // meetupArray.push(aMeetupObj);
                 // console.log('aMeetupObj :', aMeetupObj);
-                
-                // check events by name and start if mach not found do ->
-                if()
-
-                
-                // cal.Events.insert('techcalendermia@gmail.com', aMeetupObj)
-                // .then(resp => {
-                //     // console.log('inserted event:');
-                //     // console.log(resp);
-                // })
-                // .catch(err => {
-                //     console.log('Error: insertEvent-' + err.message);
-                // });
-               
 
             });
+                
+            // check events by name and start if mach not found do ->
+            
+            let currentTime = new Date(); // doesn't format right - needs to match below
+            console.log('currentTime  should be 2017-05-25T22:00:00+08:00:', currentTime);
+            
+            // GETS EVENTS FROM GOOGLE CALENDAR
+            let pulledCalendar = [];
+
+            let params = {
+                // timeMin: currentTime, // CURRENT DATE
+                // timeMax: '2017-05-25T22:00:00+08:00',
+                // q: 'query term',
+                singleEvents: true,
+                orderBy: 'startTime'
+            };
+        
+            cal.Events.list('techcalendermia@gmail.com', params)
+                .then(resp => {
+                    // console.log(resp);
+                    pulledCalendar = resp;
+                    // return resp;
+                    
+                    meetupArray.forEach(element => {
+                        console.log('meetupArray.summary :', element.summary);
+                        
+                    });
+                    // console.log('pulledCalendar :', pulledCalendar);
+                    
+                    pulledCalendar.forEach(element => {
+                        console.log('pulledCalendar.summary :', element.summary);
+                    });
+                    
+                    // console.log('pulledCalendar :', pulledCalendar);
+                    meetupArray = meetupArray.filter((obj1) => {
+                        if (!pulledCalendar.find((obj2) => {
+                            // console.log('obj2.start.dateTime :', obj2.start.dateTime, obj2.summary );
+                            // console.log('obj1.start.dateTime :', obj1.start.dateTime, obj1.summary );
+                            
+                            return obj2.summary === obj1.summary && new Date(obj2.start.dateTime).getTime() == new Date(obj1.start.dateTime).getTime() ;
+                        })
+                        ) {
+                            return obj1;
+                        }
+                    });
+                    
+                    console.log("-------------------------------------------------------------------------");
+                    meetupArray.forEach(element => {
+                        console.log('meetupArray.summary :', element.summary);
+                        
+                    });
+
+                    // CREATES GOOGLE EVENTS BASED ON ARRAY GIVEN
+                    meetupArray.forEach(function (eachObj) {
+                        cal.Events.insert('techcalendermia@gmail.com', eachObj)
+                            .then(resp => {
+                                // console.log('inserted event:');
+                                // console.log(resp);
+                            })
+                            .catch(err => {
+                                console.log('Error: insertEvent-' + err.message);
+                            });
+                    });
+                    
+
+                })
+                .catch(err => console.log('Error while listing events already in Google Calendar: ', err.message));
+                
+            
+            // console.log('meetupArray :', meetupArray);
+            // var isDuplicate = function (pulledCalendar) {
+                //     if(pulledCalendar.summary === meetupArray.summary)
+            // }
+
+            
+            // array1 = array1.filter(val => !array2.includes(val));
+
+            // console.log('pulledCalendar :', pulledCalendar);
+
+            // meetupArray = meetupArray.filter(val => !pulledCalendar.includes(val));
+
+           
+
+            
+
+            // let calenderData = ((event || {}).venue || {});
+
+
+            // let filtArray = meetupArray.filter(function (event) {
+            //     // console.log('event.summary :', event.summary);
+            //     !pulledCalendar.includes(event);
+
+            // });
+
+            // var bigCities = cities.filter(function (e) {
+            //     return e.population > 3000000;
+            // });
+            // console.log(bigCities);
+
+
+            
+                
+            // console.log('meetupArray :', meetupArray);
+            
+
+            
+
+           
                           
                 
         })
