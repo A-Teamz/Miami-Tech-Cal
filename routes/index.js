@@ -1,12 +1,12 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
+const commentsRoutes = require('./comments-routes');
+
 
 /* GET home page */
-router.get('/', (req, res, next) => {
-  res.render('index');
-});
+router.use('/', commentsRoutes);
 
-//-----------GOOGLE CODE SNIPPET ------------------------ not sure if we need it yet to test
+
 // const fs = require('fs');
 // const readline = require('readline');
 // const {google} = require('googleapis');
