@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { Observable, of } from 'rxjs';
 // import 'rxjs/add/operator/map'
-import {map}  from 'rxjs/operators'
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 // @Injectable({
 //   providedIn: 'root'
@@ -20,35 +21,35 @@ export class CommentsService {
 
 
   getEntries(){
-    return this.myHttp.get('http://localhost:3000/api/comments')
+    return this.myHttp.get(`${environment.apiBase}/api/comments`)
     .map((responseThingy)=> responseThingy.json())
   }
 
 
   addNewEntry(theWholeEntryObject){
-    return this.myHttp.post('http://localhost:3000/api/comments',theWholeEntryObject, { withCredentials:true })
+    return this.myHttp.post(`${environment.apiBase}/api/comments`,theWholeEntryObject, { withCredentials:true })
     .map((res)=>res.json());
   }
 
   getOneEntry(theIdOfTheEntry){
-    return this.myHttp.get('http://localhost:3000/api/comments/' +theIdOfTheEntry)
+    return this.myHttp.get(`${environment.apiBase}/api/comments/${theIdOfTheEntry}`)
     .map((responseThingy)=> responseThingy.json())
 
   }
 
   deleteEntry(theIdOfTheEntry){
-    return this.myHttp.post(`http://localhost:3000/api/comments/${theIdOfTheEntry}/delete`, {}, { withCredentials: true })
+    return this.myHttp.post(`${environment.apiBase}/api/comments/${theIdOfTheEntry}/delete`, {}, { withCredentials: true })
     .map((res)=> res.json())
   }
 
   updateComment(theIdOfTheEntry, updates) {
     console.log('what: ', updates)
-    return this.myHttp.put(`http://localhost:3000/api/comments/${theIdOfTheEntry}`, updates, { withCredentials: true })
+    return this.myHttp.put(`${environment.apiBase}/api/comments/${theIdOfTheEntry}`, updates, { withCredentials: true })
     .map(res => res.json());
   }
 
   checkIfLoggedIn() {
-    return this.myHttp.get(`http://localhost:3000/api/loggedin`, { withCredentials: true })
+    return this.myHttp.get(`${environment.apiBase}/api/loggedin`, { withCredentials: true })
     .map(res => res.json());
 
   }
