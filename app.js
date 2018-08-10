@@ -75,7 +75,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 //so the API chills
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:4200']
+  origin: ['http://localhost:4200', 'https://tech-events-aggrigator.herokuapp.com']
 }));
 
 
