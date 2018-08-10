@@ -42,7 +42,7 @@ passport.use(new LocalStrategy((username, password, next) => {
   });
 }));
 
-
+console.log('clientID:  = = == = = = ',process.env.googleClientID )
 // for Google login
 passport.use(new GoogleStrategy({
   clientID: process.env.googleClientID,  // <----- in ENV 
@@ -58,30 +58,30 @@ passport.use(new GoogleStrategy({
 
 
 
-  User.findOne({ googleID: profile.id }, (err, user) => {
-    if (err) {
-      console.log("profile.id", )
-
-      return done(err);
-    }
-    if (user) {
-      return done(null, user);
-    }
-
-    const newUser = new User({
-      googleID: profile.id
-    });
-    console.log('who is: ', newUser)
-
-    newUser.save((err) => {
+    User.findOne({ googleID: profile.id }, (err, user) => {
       if (err) {
+        // console.log("profile.id", )
 
         return done(err);
       }
+      if (user) {
+        return done(null, user);
+      }
 
-      done(null, newUser);
+      const newUser = new User({
+        googleID: profile.id
+      });
+      console.log('who is: ', newUser);
+
+      newUser.save((err) => {
+        if (err) {
+
+          return done(err);
+        }
+
+        done(null, newUser);
+      });
     });
   });
-  })
 }));
 
