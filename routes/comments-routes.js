@@ -4,7 +4,11 @@ const Entry         = require('../models/comments');
 
 commentsRoutes.get('/comments', (req, res, next) => {
   Entry.find({}, (err, entries) => {
-    if (err) { return res.json(err).status(500); }
+    if (err) {
+      console.log('err is: ', err);
+      
+      return res.json(err);
+    }
 ;
     return res.json(entries);
   });
