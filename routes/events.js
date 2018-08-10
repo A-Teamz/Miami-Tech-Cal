@@ -3,54 +3,40 @@ const router = express.Router();
 const Event = require('../models/event');
 const axios = require('axios');
 
-// for node-google-calendar
+// FOR NODE-GOOGLE-CALENDAR
 const CONFIG = require('../config/settings');
 const CalendarAPI = require('node-google-calendar');
 let cal = new CalendarAPI(CONFIG);  
 
 
+// TESTED SOME STUFF OUT
+router.get('/tester', (req, res, next) => {
 
-//================ Eventbright API stuff ============================
-// axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${eventbriteKey}&categories=${eventbriteCategories}&location.address=${eventbriteLocation}&location.within=${userRadius}mi`)
-  
-// let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH';
-
-// let eventbriteCategories = '102';
-
-// let eventbriteLocation = 'miami';
-
-
-// router.get('/tester', (req, res, next) => {
-
-// // to get events
-//     //     let params = {
-// //         // timeMin: '2018-08-08T06:00:00+08:00',
-// //         // timeMax: '2018-08-08T22:00:00+08:00',
-// //         // q: 'query term',
-// //         singleEvents: true,
-// //         orderBy: 'startTime'
-// //     }; 	//Optional query parameters referencing google APIs
+    // to get events
+    let params = {
+        // timeMin: '2018-08-08T06:00:00+08:00',
+        // timeMax: '2018-08-08T22:00:00+08:00',
+        // q: 'query term',
+        singleEvents: true,
+        orderBy: 'startTime'
+    }; 	//Optional query parameters referencing google APIs
     
-// //     cal.Events.list('techcalendermia@gmail.com', params)
-// //   .then(json => {
-// // 	//Success
-// // 	console.log('List of events on calendar within time-range:');
-// // 	res.send(json);
-// //   }).catch(err => {
-// // 	//Error
-// // 	console.log('Error: listSingleEvents -' + err.message);
-// //   });
-// });
+    cal.Events.list('techcalendermia@gmail.com', params)
+        .then(json => {
+            //Success
+            console.log('List of events on calendar within time-range:');
+            res.send(json);
+        })
+        .catch(err => console.log('Error: listSingleEvents -' + err.message));
+        
+});
 
 
-// gets all events
+// GETS ALL THE DATA FROM MEETUP AND EVENTBRITE FORMATS IT AND CREATES GOOGLE CALENDAR EVENTS -------------------------------------
 router.get('/events', (req, res, next) => {
-    let eventbrightArray;
-    let meetupArray;
-    let pulledCalendar = [];
-
-    let meetupPromise;
-    let eventPromise;
+    let eventbrightArray; // array of events from Eventbrite
+    let meetupArray; // array of events from Meetup
+    let pulledCalendar = []; // array of events already on Google Calendar
 
     let eventbriteKey = 'ZJYXEPK4OFMGCTEUVMYH';
     let eventbriteCategories = '102';
@@ -94,12 +80,8 @@ router.get('/events', (req, res, next) => {
 
                 return aEventbrightObj; // returns reformatted object each iteration
             });
-
-            eventPromise = Promise.resolve(eventbrightArray);
-
         })
         .catch(err => console.log('Error getting Eventbright data: ', err));
-
 
 
     // https://api.meetup.com/find/upcoming_events?key=726f391116101c5b316166a3d4411e&zip=33130&category=34&radius=10&sign=true
@@ -108,7 +90,6 @@ router.get('/events', (req, res, next) => {
     let meetupUserRadius = '10'; // 10 miles hard coded
     
     axios.get(`https://api.meetup.com/find/upcoming_events?key=${meetupKey}&zip=${meetupUserZipCode}&category=34&radius=${meetupUserRadius}&sign=true`)
-    
         .then((meetupEvents) => {
             // console.log('meetupEvents :', meetupEvents);
             
@@ -138,11 +119,7 @@ router.get('/events', (req, res, next) => {
                 };
 
                 return aMeetupObj; // returns reformatted object each iteration
-
             });
-
-            meetupPromise = Promise.resolve(meetupArray);
-
                             
             // GETS EVENTS FROM GOOGLE CALENDAR -----------------------------------------------------------------------------------
             let params = {
@@ -175,10 +152,7 @@ router.get('/events', (req, res, next) => {
         .catch(err => console.log('Error finding Meetup events and creating JSON objects: ', err));
     
     
-
-    
-    
-    
+   // AFTER A 2 SECOND TIMEOUT THIS RUNS ----------------------------------------------------------------------------------
     setTimeout(() => {
         let combinedArray = meetupArray.concat(eventbrightArray); // combines the arrays 
 
@@ -207,13 +181,11 @@ router.get('/events', (req, res, next) => {
                     console.log('Error while insertEvent to Google Calendar: ' + err.message);
                 });
         });
-        
-    }, 3000);
-     
+    }, 2000);
 });
         
 
-// //gets ONE event - PROBABLY NOT NEEDED
+// //gets ONE event - PROBABLY NOT NEEDED ANYMORE
 // router.get('/events/details/:id', (req, res, next) => {
 //     const id = req.params.id;
 //     Event.findById(id)
@@ -222,6 +194,5 @@ router.get('/events', (req, res, next) => {
 //                 .catch(err => console.log('Error while finding event by ID: ', err));
 //         });
 // });
-
 
 module.exports = router;

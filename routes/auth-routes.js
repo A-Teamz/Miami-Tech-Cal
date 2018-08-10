@@ -2,6 +2,8 @@ const express    = require('express');
 const passport   = require('passport');
 const bcrypt     = require('bcryptjs');
 const authRoutes = express.Router();
+const cors = require('cors');
+
 // const uploadCloud = require("../config/cloudinary");
 
 
@@ -127,8 +129,8 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
   }));
   
   authRoutes.get("/auth/google/callback", passport.authenticate("google", {
-    failureRedirect: "/",
-    successRedirect: "/" // <----- Change this eventually to angular
+    successRedirect: '/auth/google/success',
+		failureRedirect: '/auth/google/failure'
   }));
 
 
