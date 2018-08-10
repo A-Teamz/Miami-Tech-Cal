@@ -1,6 +1,43 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<h1>Calendar Landing Page</h1>
 
-<iframe src="https://calendar.google.com/calendar/embed?src=techcalendermia%40gmail.com&ctz=Etc%2FGMT" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-<app-comments></app-comments>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Tech<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
 
+<div class="container-fluid">
+  <div class="homePage">
+    <div id="header">
+      <h1>Miami Tech Calendar</h1>
+    </div>
+        <br>
+      <iframe id="techCalendar" src="https://calendar.google.com/calendar/embed?src=techcalendermia%40gmail.com&ctz=Etc%2FGMT" style="border: 0" width="1320" height="800" frameborder="0" scrolling="no"></iframe>
+        <br>
+
+    <div class="commentsForm">
+      <app-comments></app-comments>
+    </div>
+
+  </div>
+</div>
