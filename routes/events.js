@@ -10,26 +10,26 @@ let cal = new CalendarAPI(CONFIG);
 
 
 // TESTED SOME STUFF OUT
-router.get('/tester', (req, res, next) => {
+// router.get('/tester', (req, res, next) => {
 
-    // to get events
-    let params = {
-        // timeMin: '2018-08-08T06:00:00+08:00',
-        // timeMax: '2018-08-08T22:00:00+08:00',
-        // q: 'query term',
-        singleEvents: true,
-        orderBy: 'startTime'
-    }; 	//Optional query parameters referencing google APIs
+//     // to get events
+//     let params = {
+//         // timeMin: '2018-08-08T06:00:00+08:00',
+//         // timeMax: '2018-08-08T22:00:00+08:00',
+//         // q: 'query term',
+//         singleEvents: true,
+//         orderBy: 'startTime'
+//     }; 	//Optional query parameters referencing google APIs
     
-    cal.Events.list('techcalendermia@gmail.com', params)
-        .then(json => {
-            //Success
-            console.log('List of events on calendar within time-range:');
-            res.send(json);
-        })
-        .catch(err => console.log('Error: listSingleEvents -' + err.message));
+//     cal.Events.list('techcalendermia@gmail.com', params)
+//         .then(json => {
+//             //Success
+//             console.log('List of events on calendar within time-range:');
+//             res.send(json);
+//         })
+//         .catch(err => console.log('Error: listSingleEvents -' + err.message));
         
-});
+// });
 
 
 // GETS ALL THE DATA FROM MEETUP AND EVENTBRITE FORMATS IT AND CREATES GOOGLE CALENDAR EVENTS -------------------------------------
@@ -78,22 +78,15 @@ router.get('/events', (req, res, next) => {
 
                 // console.log('aEventbrightObj :', aEventbrightObj);
 
-<<<<<<< HEAD
-router.get('/events', (req, res, next) => { 
-
-    res.send("i love chilling!")
-})
-
-
-// gets all events
-router.get('/eventspoopie', (req, res, next) => {
-=======
                 return aEventbrightObj; // returns reformatted object each iteration
-            });
-        })
-        .catch(err => console.log('Error getting Eventbright data: ', err));
+                });
+                })
+                .catch(err => console.log('Error getting Eventbright data: ', err));
+    // router.get('/events', (req, res, next) => { 
 
->>>>>>> 6d0eada3d39ac7f63176ffddf09420b1050a210f
+    //     res.send("i love chilling!")
+    // })
+
 
     // https://api.meetup.com/find/upcoming_events?key=726f391116101c5b316166a3d4411e&zip=33130&category=34&radius=10&sign=true
     let meetupKey = '726f391116101c5b316166a3d4411e'; // meetup API key
