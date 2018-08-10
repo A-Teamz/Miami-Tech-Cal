@@ -1,52 +1,74 @@
-<form (ngSubmit)="addNew()">
-  <h3>Join the conversation</h3>
-  
-  <div class="form-group">
-    <label class="col-form-label" for="inputDefault">Name: </label>
-      <br>
-    <input [(ngModel)]="theNewEntry.title" name="blah" type="text" class="form-control" id="inputDefault">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <form (ngSubmit)="addNew()">
+            <h3>Join the conversation</h3>
+            
+            <div class="form-group">
+              <label class="col-form-label" for="inputDefault">Name: </label>
+              <br>
+              <input [(ngModel)]="theNewEntry.title" name="blah" type="text" class="form-control" id="inputDefault">
+            </div>
+            
+            <br>
+            
+            <div class="form-group">
+              <label for="exampleTextarea">Comments: </label>
+              <br>
+              <textarea  [(ngModel)]="theNewEntry.content" class="form-control nameArea" id="exampleTextarea" name="blah" cols="5" rows="5"></textarea>
+            </div>
+            
+            <button class="btn btn-outline-secondary">Submit</button>
+            
+          </form>
+    </div>
+
+<div class="col-sm-6 col-md-6 col-lg-6">
+  <div *ngFor="let oneEntry of entries; let i = index">
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-12 " id="calendarEntry">
+            <div class="card">
+              <div class="card-body">
+            
+                <h3>{{oneEntry.title}}</h3>
+                <p>{{oneEntry.content}}</p>
+      
+              <div *ngIf="oneEntry.owner === loggedInUser.googleID ">
+                <button class="btn btn-outline-primary btn-sm btn-space" (click)="showEditForm(i)">Edit</button>
+                <button class="btn btn-outline-danger btn-sm" (click)="deletePost(oneEntry._id)">Delete</button>
+              <br>
+              <br>
+            </div>
+            </div>
+      
+        <form (ngSubmit)="doTheUpdate(oneEntry._id, myForm)" #myForm="ngForm" *ngIf="show === i">
+          <label for="title-input"> Updated Name: </label>
+            <input id="title-input" type="text" [(ngModel)]="oneEntry.title" name="title">
+            <br>
+            <br>
+          <label for="content-input"> Updated Comments: </label>
+          <input id="content-input" type="text"  [(ngModel)]="oneEntry.content" name="content" >
+            <br>
+          <button type="submit">Save Changes</button>
+        </form>
+      
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    
   </div>
 
-<br>
-  
-<div class="form-group">
-  <label for="exampleTextarea">Comments: </label>
-    <br>
-  <textarea  [(ngModel)]="theNewEntry.content" class="form-control nameArea" id="exampleTextarea" name="blah" cols="5" rows="5"></textarea>
-</div>
-
-  <button class="btn btn-outline-secondary">Submit</button>
-
-</form>
 
 <br>
 <br>
 
-<div *ngFor="let oneEntry of entries; let i = index">
-<div id="calendarEntry" class="card">
-    <div class="card-body">
-  
-  <h3>{{oneEntry.title}}</h3>
-  <p>{{oneEntry.content}}</p>
 
-  <div *ngIf="oneEntry.owner === loggedInUser.googleID ">
-    <button class="btn btn-outline-primary btn-sm btn-space" (click)="showEditForm(i)">Edit</button>
-    <button class="btn btn-outline-danger btn-sm" (click)="deletePost(oneEntry._id)">Delete</button>
-  <br>
-  <br>
-</div>
-
-  <form (ngSubmit)="doTheUpdate(oneEntry._id, myForm)" #myForm="ngForm" *ngIf="show === i">
-      <label for="title-input"> Updated Name: </label>
-      <input id="title-input" type="text" [(ngModel)]="oneEntry.title" name="title">
-      <br>
-      <br>
-      <label for="content-input"> Updated Comments: </label>
-      <input id="content-input" type="text"  [(ngModel)]="oneEntry.content" name="content" >
-      <br>
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
- 
-</div>
 </div>
