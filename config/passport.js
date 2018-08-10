@@ -42,7 +42,7 @@ passport.use(new LocalStrategy((username, password, next) => {
   });
 }));
 
-console.log('clientID:  = = == = = = ',process.env.googleClientID )
+console.log('clientID:  = = == = = = ', process.env.googleClientID);
 // for Google login
 passport.use(new GoogleStrategy({
   clientID: process.env.googleClientID,  // <----- in ENV 
@@ -50,7 +50,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "/api/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
   
-  process.nextTick(function () {
+  process.nextTick( ()=> {
     
   
 
