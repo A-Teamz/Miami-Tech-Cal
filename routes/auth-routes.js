@@ -133,7 +133,7 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
   
   authRoutes.get("/auth/google/callback", passport.authenticate("google", {
       
-    successRedirect: 'http://localhost:4200',
+    successRedirect: '/',
 		failureRedirect: '/auth/google/failure'
   }));
 
