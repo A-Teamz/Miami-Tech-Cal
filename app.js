@@ -53,8 +53,8 @@ app.use(require('node-sass-middleware')({
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Sessions
@@ -96,6 +96,8 @@ app.use('/api', commentsRoutes);
 app.use((req, res, next)=> {
   res.sendFile(__dirname + '/public/index.html');
 });
+
+
 // catch 404 and forward to error handler
 // app.use((req, res, next) => {
 //   const err = new Error('Not Found');
