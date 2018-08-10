@@ -22,7 +22,7 @@ export class CommentsService {
 
 
   getEntries(){
-    return this.myHttp.get(`${environment.apiBase}/api/comments`)
+    return this.myHttp.get(`${environment.apiBase}/api/comments`, { withCredentials:true })
     .map((responseThingy)=> responseThingy.json())
   }
 
@@ -33,7 +33,7 @@ export class CommentsService {
   }
 
   getOneEntry(theIdOfTheEntry){
-    return this.myHttp.get(`${environment.apiBase}/api/comments/${theIdOfTheEntry}`)
+    return this.myHttp.get(`${environment.apiBase}/api/comments/${theIdOfTheEntry}`, { withCredentials:true })
     .map((responseThingy)=> responseThingy.json())
 
   }
