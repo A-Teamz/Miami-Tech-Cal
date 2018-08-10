@@ -94,7 +94,7 @@ app.use('/api', commentsRoutes);
 
 
 app.all('/*', function (req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -114,9 +114,9 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-app.use((requestAnimationFrame, res, next) => {
-  res.sendfile(__dirname + '/public/index.html');
-});
+// app.use((requestAnimationFrame, res, next) => {
+//   res.sendFile(__dirname + '/public/index.html');
+// });
 
 module.exports = app;
 

@@ -7,7 +7,7 @@
 <br>
 <br>
   <label>Comments: </label>
-  <textarea  [(ngModel)]="theNewEntry.content" name="blah" cols="10" rows="10"></textarea>
+  <textarea [(ngModel)]="theNewEntry.content" name="blah" cols="10" rows="10"></textarea>
 
 
 <button>Submit</button>
@@ -19,10 +19,13 @@
 
   <h3>{{oneEntry.title}}</h3>
   <p>{{oneEntry.content}}</p>
-  <button (click)="deletePost(oneEntry._id)">Delete</button>
-  <button (click)="showEditForm(i)">Edit</button>
-{{show}}
-{{i}}
+
+
+  <div *ngIf="oneEntry.owner === loggedInUser.googleID ">
+    <button (click)="deletePost(oneEntry._id)">Delete</button>
+    <button (click)="showEditForm(i)">Edit</button>
+  </div>
+
   <form (ngSubmit)="doTheUpdate(oneEntry._id, myForm)" #myForm="ngForm" *ngIf="show === i">
       <label for="title-input"> Updated Name: </label>
       <input id="title-input" type="text" [(ngModel)]="oneEntry.title" name="title">

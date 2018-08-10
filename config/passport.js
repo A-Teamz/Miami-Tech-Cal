@@ -47,10 +47,21 @@ passport.use(new LocalStrategy((username, password, next) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.googleClientID,  // <----- in ENV 
   clientSecret: process.env.googleClientSecret, // <----- in ENV 
-  callbackURL: "/auth/google/callback"
+  callbackURL: "/api/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
+  
+  process.nextTick(function () {
+    
+  
+
+
+
+
+
   User.findOne({ googleID: profile.id }, (err, user) => {
     if (err) {
+      console.log("profile.id", )
+
       return done(err);
     }
     if (user) {
@@ -64,10 +75,13 @@ passport.use(new GoogleStrategy({
 
     newUser.save((err) => {
       if (err) {
+
         return done(err);
       }
+
       done(null, newUser);
     });
   });
-
+  })
 }));
+

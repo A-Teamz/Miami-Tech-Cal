@@ -67,9 +67,14 @@ let cal = new CalendarAPI(CONFIG);
         
 //});
 
+router.get('/events', (req, res, next) => { 
+
+    res.send("i love chilling!")
+})
+
 
 // gets all events
-router.get('/events', (req, res, next) => {
+router.get('/eventspoopie', (req, res, next) => {
 
     // https://api.meetup.com/find/upcoming_events?key=726f391116101c5b316166a3d4411e&zip=33130&category=34&radius=10&sign=true
         

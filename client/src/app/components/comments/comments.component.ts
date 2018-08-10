@@ -18,6 +18,7 @@ export class CommentsComponent implements OnInit {
 
   theEntryToBeDeleted: any = {};
 
+  loggedInUser: any = {};
   public updatedComment: Object = {};
   public title: String;
   public content: String;
@@ -30,6 +31,7 @@ export class CommentsComponent implements OnInit {
     this.theService.addNewEntry(this.theNewEntry)
       .toPromise()
       .then(() => {
+        this.theNewEntry = {};
         this.getEntries();
       })
       .catch( err => console.log('the err in comments: ', err) )
@@ -76,6 +78,7 @@ export class CommentsComponent implements OnInit {
       .toPromise()
       .then(()=>{
         this.myRouter.navigate(['/'])
+
       })
       .catch( err => err.json() )
   }
@@ -91,6 +94,14 @@ export class CommentsComponent implements OnInit {
 
   ngOnInit() {
     this.getEntries();
+    this.theService.checkIfLoggedIn()
+      .toPromise()
+      .then(theUser => {
+        console.log('who is logged in: ', theUser)
+        this.loggedInUser = theUser;
+      } )
+      .catch( err => console.log('Error in check logon in comments: ', err) )
+    
   }
 
 }
