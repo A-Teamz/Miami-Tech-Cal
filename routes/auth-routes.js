@@ -94,10 +94,13 @@ authRoutes.post('/logout', (req, res, next) => {
 // Checks if logged in
 authRoutes.get('/loggedin', (req, res, next) => {
     console.log('back: ', req.user);
-    if (req.isAuthenticated()) {
+    if (req.user) {
         res.status(200).json(req.user);
-        return;
     }
+    // if (req.isAuthenticated()) {
+    //     res.status(200).json(req.user);
+    //     return;
+    // }
     res.status(403).json({ message: 'Unauthorized' });
 }); // loggedin closed
 
@@ -129,7 +132,8 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
   }));
   
   authRoutes.get("/auth/google/callback", passport.authenticate("google", {
-    successRedirect: '/auth/google/success',
+      
+    successRedirect: 'http://localhost:4200',
 		failureRedirect: '/auth/google/failure'
   }));
 

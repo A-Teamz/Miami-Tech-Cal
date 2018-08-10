@@ -12,6 +12,7 @@ commentsRoutes.get('/comments', (req, res, next) => {
 
 commentsRoutes.post('/comments', (req, res, next) => {
   const newEntry = new Entry({
+    owner: req.user.googleID,
     title: req.body.title,
     content: req.body.content
   });
@@ -39,12 +40,11 @@ commentsRoutes.post('/comments/:id/delete', (req, res, next) => {
 // edit comments
 
 commentsRoutes.put('/comments/:id', (req, res, next) => {
-  // console.log('req.params.id:', req.params.id)
-  // console.log('body: ', req.body)
-  // if (!req.user) {
-  //   res.status(401).json({ message: "Log in to update the phone." });
-  //   return;
-  // }
+ 
+  if (!req.user) {
+    res.status(401).json({ message: "Nahhhhh" });
+    return;
+  }
   
 
   const updates = {

@@ -25,7 +25,7 @@ export class CommentsService {
 
 
   addNewEntry(theWholeEntryObject){
-    return this.myHttp.post('http://localhost:3000/api/comments',theWholeEntryObject)
+    return this.myHttp.post('http://localhost:3000/api/comments',theWholeEntryObject, { withCredentials:true })
     .map((res)=>res.json());
   }
 
@@ -42,8 +42,14 @@ export class CommentsService {
 
   updateComment(theIdOfTheEntry, updates) {
     console.log('what: ', updates)
-    return this.myHttp.put(`http://localhost:3000/api/comments/${theIdOfTheEntry}`, updates)
+    return this.myHttp.put(`http://localhost:3000/api/comments/${theIdOfTheEntry}`, updates, { withCredentials: true })
     .map(res => res.json());
+  }
+
+  checkIfLoggedIn() {
+    return this.myHttp.get(`http://localhost:3000/api/loggedin`, { withCredentials: true })
+    .map(res => res.json());
+
   }
 
 
