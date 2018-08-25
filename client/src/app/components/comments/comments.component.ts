@@ -34,13 +34,13 @@ export class CommentsComponent implements OnInit {
         this.theNewEntry = {};
         this.getEntries();
       })
-      .catch( err => console.log('the err in comments: ', err) )
-  }
+      .catch(err => console.log('the err in comments: ', err));
+  
 
   getEntries() {
     this.theService.getEntries()
       .subscribe((res) => {
-      console.log('entries: ', res)
+      // console.log('entries: ', res)
       this.entries = res.reverse();
     })
   }
@@ -74,13 +74,13 @@ export class CommentsComponent implements OnInit {
     console.log('this.oneEntry.title:', this.title)
     this.updatedComment = { title: this.title, content: this.content};
     console.log("updates:", this.updatedComment)
-    this.theService.updateComment(oneEntryId, this.updatedComment)
-      .toPromise()
-      .then(()=>{
-        this.myRouter.navigate(['/'])
+      this.theService.updateComment(oneEntryId, this.updatedComment)
+        .toPromise()
+        .then(() => {
+          this.myRouter.navigate(['/'])
 
-      })
-      .catch( err => err.json() )
+        })
+        .catch(err => err.json());
   }
 
   showEditForm(index) {
@@ -94,13 +94,13 @@ export class CommentsComponent implements OnInit {
 
   ngOnInit() {
     this.getEntries();
-    this.theService.checkIfLoggedIn()
-      .toPromise()
-      .then(theUser => {
-        console.log('who is logged in: ', theUser)
-        this.loggedInUser = theUser;
-      } )
-      .catch( err => console.log('Error in check logon in comments: ', err) )
+      this.theService.checkIfLoggedIn()
+        .toPromise()
+        .then(theUser => {
+          console.log('who is logged in: ', theUser)
+          this.loggedInUser = theUser;
+        })
+        .catch(err => console.log('Error in check logon in comments: ', err));
     
   }
 

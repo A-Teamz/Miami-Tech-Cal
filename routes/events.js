@@ -156,6 +156,8 @@ router.get('/events', (req, res, next) => {
         .catch(err => console.log('Error finding Meetup events and creating JSON objects: ', err));
     
     
+    
+    // MAKE THIS A CHRON FUNCTION - DAILY?
    // AFTER A 2 SECOND TIMEOUT THIS RUNS ----------------------------------------------------------------------------------
     setTimeout(() => {
         let combinedArray = meetupArray.concat(eventbrightArray); // combines the arrays 

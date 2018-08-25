@@ -6,14 +6,6 @@ import 'rxjs/add/operator/map';
 // import 'rxjs/add/operator/catch';
 import { environment } from '../../environments/environment';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class CommentsService {
-
-//   constructor() { }
-// }
-
 
 @Injectable()
 export class CommentsService {
@@ -26,7 +18,6 @@ export class CommentsService {
     .map((responseThingy)=> responseThingy.json())
   }
 
-
   addNewEntry(theWholeEntryObject){
     return this.myHttp.post(`${environment.apiBase}/api/comments`,theWholeEntryObject, { withCredentials:true })
     .map((res)=>res.json());
@@ -35,7 +26,6 @@ export class CommentsService {
   getOneEntry(theIdOfTheEntry){
     return this.myHttp.get(`${environment.apiBase}/api/comments/${theIdOfTheEntry}`, { withCredentials:true })
     .map((responseThingy)=> responseThingy.json())
-
   }
 
   deleteEntry(theIdOfTheEntry){
@@ -54,7 +44,5 @@ export class CommentsService {
     .map(res => res.json());
 
   }
-
-
 
 }

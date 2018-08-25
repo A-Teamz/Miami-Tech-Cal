@@ -5,11 +5,11 @@ const Entry         = require('../models/comments');
 commentsRoutes.get('/comments', (req, res, next) => {
   Entry.find({}, (err, entries) => {
     if (err) {
-      console.log('err is: ', err);
+      // console.log('err is: ', err);
       
       return res.json(err);
     }
-;
+
     return res.json(entries);
   });
 });
@@ -32,17 +32,16 @@ commentsRoutes.post('/comments', (req, res, next) => {
 commentsRoutes.post('/comments/:id/delete', (req, res, next) => {
   // console.log('req.params.id: ', req.params.id)
   Entry.findByIdAndRemove(req.params.id)
-  .then((oneEntry)=>{
+    .then((oneEntry) => {
       res.json(entries);
-  })
-  .catch((err)=>{
+    })
+    .catch((err) => {
       res.json(err);
-  })
-})
+    });
+});
 
 
-// edit comments
-
+// EDIT COMMENTS
 commentsRoutes.put('/comments/:id', (req, res, next) => {
  
   if (!req.user) {
@@ -50,18 +49,16 @@ commentsRoutes.put('/comments/:id', (req, res, next) => {
     return;
   }
   
-
   const updates = {
-      title: req.body.title,
-      content: req.body.content,
+    title: req.body.title,
+    content: req.body.content,
   };
 
-  console.log("======", updates)
-
+  // console.log("======", updates);
 
   Entry.findByIdAndUpdate(req.params.id, updates)
-    .then( savedEntry => res.json(savedEntry) )
-    .catch( err => res.json(err) )
+    .then(savedEntry => res.json(savedEntry))
+    .catch(err => res.json(err));
   
 });
 
