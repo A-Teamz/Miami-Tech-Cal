@@ -42,7 +42,6 @@ export class CommentsService {
   checkIfLoggedIn() {
     return this.myHttp.get(`${environment.apiBase}/api/loggedin`, { withCredentials: true })
     .map(res => res.json());
-
   }
 
 }
