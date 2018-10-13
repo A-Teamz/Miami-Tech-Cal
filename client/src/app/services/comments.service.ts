@@ -12,7 +12,6 @@ export class CommentsService {
 
   constructor(private myHttp: Http) { }
 
-
   getEntries(){
     return this.myHttp.get(`${environment.apiBase}/api/comments`)
     .map((responseThingy)=> responseThingy.json())
