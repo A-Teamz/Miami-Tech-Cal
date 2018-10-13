@@ -36,70 +36,71 @@ export class CommentsComponent implements OnInit {
         this.getEntries();
       })
       .catch(err => console.log('the err in comments: ', err));
+  }
   
 
-    getEntries() {
-      this.theService.getEntries()
-        .subscribe((res) => {
-          // console.log('entries: ', res)
-          this.entries = res.reverse();
-        })
-    };
+  getEntries() {
+    this.theService.getEntries()
+      .subscribe((res) => {
+        // console.log('entries: ', res)
+        this.entries = res.reverse();
+      })
+  };
 
 
-    // this is comment
-    deletePost(oneEntryId) {
-      console.log("oneEntryId: ", oneEntryId);
-      // oneEntry = this.theEntryToBeDeleted
-      this.theService.deleteEntry(oneEntryId)
-        .subscribe(
-          ObjFromApi => {
-            this.getEntries();
-          }
-        )
+  // this is comment
+  deletePost(oneEntryId) {
+    console.log("oneEntryId: ", oneEntryId);
+    // oneEntry = this.theEntryToBeDeleted
+    this.theService.deleteEntry(oneEntryId)
+      .subscribe(
+        ObjFromApi => {
+          this.getEntries();
+        }
+      )
+  };
+
+  doTheUpdate(oneEntryId, formData) {
+    console.log('oneEntryId = = = =  =', oneEntryId);
+
+    const formInfo = formData.form.controls;
+    this.title = formInfo.title.value;
+    this.content = formInfo.content.value;
+    console.log("=============== id: ", this.title, this.content);
+  
+    this.sendUpdatesToApi(oneEntryId);
+  };
+
+  sendUpdatesToApi(oneEntryId) {
+    console.log('this.oneEntry.title:', this.title);
+    this.updatedComment = { title: this.title, content: this.content };
+    console.log("updates:", this.updatedComment);
+    this.theService.updateComment(oneEntryId, this.updatedComment)
+      .toPromise()
+      .then(() => {
+        this.myRouter.navigate(['/'])
+
+      })
+      .catch(err => err.json());
+  };
+
+  showEditForm(index) {
+    if (this.show === index) {
+      this.show = false
+    } else {
+      this.show = index;
     }
+  };
 
-    doTheUpdate(oneEntryId, formData) {
-      console.log('oneEntryId = = = =  =', oneEntryId);
-
-      const formInfo = formData.form.controls;
-      this.title = formInfo.title.value;
-      this.content = formInfo.content.value;
-      console.log("=============== id: ", this.title, this.content);
-    
-      this.sendUpdatesToApi(oneEntryId);
-    }
-
-    sendUpdatesToApi(oneEntryId) {
-      console.log('this.oneEntry.title:', this.title);
-      this.updatedComment = { title: this.title, content: this.content };
-      console.log("updates:", this.updatedComment);
-      this.theService.updateComment(oneEntryId, this.updatedComment)
-        .toPromise()
-        .then(() => {
-          this.myRouter.navigate(['/'])
-
-        })
-        .catch(err => err.json());
-    }
-
-    showEditForm(index) {
-      if (this.show === index) {
-        this.show = false
-      } else {
-        this.show = index;
-      }
-    }
-
-    ngOnInit() {
-      this.getEntries();
-      this.theService.checkIfLoggedIn()
-        .toPromise()
-        .then(theUser => {
-          console.log('who is logged in: ', theUser)
-          this.loggedInUser = theUser;
-        })
-        .catch(err => console.log('Error in check logon in comments: ', err));
-    }
-  }
+  ngOnInit() {
+    this.getEntries();
+    this.theService.checkIfLoggedIn()
+      .toPromise()
+      .then(theUser => {
+        console.log('who is logged in: ', theUser)
+        this.loggedInUser = theUser;
+      })
+      .catch(err => console.log('Error in check logon in comments: ', err));
+  };
 }
+
