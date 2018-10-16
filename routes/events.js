@@ -147,7 +147,6 @@ router.get('/events', (req, res, next) => {
                     // pulledCalendar.forEach(element => {
                     //     console.log('pulledCalendar.summary :', element.summary);
                     // });
-
                    
                 })
                 .catch(err => console.log('Error while listing events already in Google Calendar: ', err.message));
