@@ -156,7 +156,7 @@ router.get('/events', (req, res, next) => {
     
     
     
-    // MAKE THIS A CHRON FUNCTION - DAILY?
+    // MAKE THIS A CRON JOB - DAILY
    // AFTER A 2 SECOND TIMEOUT THIS RUNS ----------------------------------------------------------------------------------
     setTimeout(() => {
         let combinedArray = meetupArray.concat(eventbrightArray); // combines the arrays 
