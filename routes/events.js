@@ -33,6 +33,8 @@ let cal = new CalendarAPI(CONFIG);
 
 
 // GETS ALL THE DATA FROM MEETUP AND EVENTBRITE FORMATS IT AND CREATES GOOGLE CALENDAR EVENTS -------------------------------------
+
+
 router.get('/events', (req, res, next) => {
     let eventbrightArray; // array of events from Eventbrite
     let meetupArray; // array of events from Meetup
@@ -73,7 +75,7 @@ router.get('/events', (req, res, next) => {
                     },
                     // might have to reformat location
                     // location: , // // Eventbright doesn't have location data - just an id number
-                    description: descriptionData + '    ' + event.url,
+                    description: descriptionData + '    ' + '<a href=\"' + event.url + '\">' + event.url + '</a>',
                 };
 
                 // console.log('aEventbrightObj :', aEventbrightObj);
@@ -119,7 +121,7 @@ router.get('/events', (req, res, next) => {
                     },
                     // might have to reformat location
                     location: locationData.name + ' ' +/* locationData.address + ' ' +*/ locationData.city /*+ ', ' + locationData.zip*/,
-                    description: event.description + '    ' + event.link,
+                    description: event.description + '    ' + '<a href=\"' + event.link + '\">' + event.link + '</a>',
                 };
 
                 return aMeetupObj; // returns reformatted object each iteration
